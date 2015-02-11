@@ -1,0 +1,50 @@
+table.matrix {
+    border-spacing: 0px;
+    border-collapse: collapse;
+}
+
+table.matrix td {
+    border: solid 1px;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+}
+
+.active-matrix td.cell-empty:hover {
+    background-color: #dddddd;
+}
+
+table.matrix td.cell-with-ship {
+    background-color: #999999;
+}
+
+table.matrix td.cell-blocked {
+    background-color: #cccccc;
+}
+
+.matrix-holder {
+    margin: 10px;
+}
+
+.float-left {
+    float: left;
+}
+
+.float-right {
+    float: right;
+}
+
+.header-cell {
+    font-weight: bold;
+}
+
+.player-name {
+    text-align: center;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.game {
+    width: 800px;
+    margin: 0 auto;
+}
