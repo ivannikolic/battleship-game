@@ -4,14 +4,36 @@ table.matrix {
 }
 
 table.matrix td {
-    border: solid 1px;
+    border: solid 1px #777777;
     width: 30px;
     height: 30px;
     text-align: center;
 }
 
-.active-matrix td.cell-empty:hover {
-    background-color: #dddddd;
+.clickable-matrix td.cell-empty:hover {
+    background-color: #eaf73c;
+    cursor: pointer;
+}
+
+.matrix-holder {
+    background-color: #F5F1DE;
+    margin: 5px;
+    padding: 5px;
+    -moz-box-shadow: 3px 3px 4px #777;
+    -webkit-box-shadow: 3px 3px 4px #777;
+    box-shadow: 3px 3px 4px #777;
+    /* For IE 8 */
+    -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#000000')";
+    /* For IE 5.5 - 7 */
+    filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#000000');
+}
+
+.active-matrix {
+    background-color: #db8280;
+}
+
+table.matrix td {
+    background-color: #ffffff;
 }
 
 table.matrix td.cell-with-ship {
@@ -19,11 +41,15 @@ table.matrix td.cell-with-ship {
 }
 
 table.matrix td.cell-blocked {
-    background-color: #cccccc;
+    background-color: #ffffff;
 }
 
-.matrix-holder {
-    margin: 10px;
+table.matrix td.cell-missed {
+    color: #db4e5a;
+}
+
+table.matrix td.cell-ship-hit {
+    background-color: #db4e5a;
 }
 
 .float-left {

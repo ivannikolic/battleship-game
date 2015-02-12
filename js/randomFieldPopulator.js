@@ -26,16 +26,14 @@ function RandomFieldPopulator(){
 
     function placeShip(matrix, size) {
         var orientation = randomOrientation();
-        //console.log(orientation == HORIZONTAL ? 'horizontal' : 'vertical')
         var randomRow = randomInteger(orientation == HORIZONTAL ? MATRIX_SIZE : MATRIX_SIZE - size+1);
         var randomColumn = randomInteger(orientation == VERTICAL ? MATRIX_SIZE : MATRIX_SIZE - size+1);
-        //console.log(randomRow + "," + randomColumn);
 
         if (canSheepBePlaced(matrix, randomRow, randomColumn, orientation, size)){
-            console.log("ship of size " + size + "can be placed (" + randomRow + "," + randomColumn + ")");
+            //console.log("ship of size " + size + "can be placed (" + randomRow + "," + randomColumn + ")");
             fillInFields(matrix, randomRow, randomColumn, orientation, size);
         } else {
-            console.log("ship of size " + size + "cannot be placed (" + randomRow + "," + randomColumn + ")");
+            //console.log("ship of size " + size + "cannot be placed (" + randomRow + "," + randomColumn + ")");
             placeShip(matrix, size); //try again
         }
     }
@@ -55,7 +53,6 @@ function RandomFieldPopulator(){
         for (var i = 0; i < size; i++) {
             var row = orientation == HORIZONTAL ? randomRow : randomRow + i;
             var column = orientation == VERTICAL ? randomColumn : randomColumn + i;
-            //console.log(row + "," + column);
             matrix[row][column] = CELL_WITH_SHIP;
             markSurroundingCellsAsBlocked(matrix, row, column);
         }
@@ -70,10 +67,7 @@ function RandomFieldPopulator(){
     }
 
     function markCellBlockedIfItsEmpty(matrix, row, column){
-        if (row < 0 || row >= MATRIX_SIZE){
-            return;
-        }
-        if (column < 0 || column >= MATRIX_SIZE){
+        if (!isCellInMatrixRange(row,column)){
             return;
         }
         if (matrix[row][column]==CELL_EMPTY){
