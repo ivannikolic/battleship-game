@@ -46,6 +46,21 @@ table.matrix td.cell-blocked {
 
 table.matrix td.cell-missed {
     color: #db4e5a;
+    font-size: 18px;
+    -webkit-animation: cell-missed-animation 1s; /* Chrome, Safari, Opera */
+    animation: cell-missed-animation 1s;
+}
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes cell-missed-animation {
+    from {background: #db4e5a;}
+    to {background: #ffffff;}
+}
+
+/* Standard syntax */
+@keyframes cell-missed-animation {
+    from {background: #db4e5a;}
+    to {background: #ffffff;}
 }
 
 table.matrix td.cell-ship-hit {

@@ -27,17 +27,17 @@ function Game(player, opponent) {
         $(document).on('nextPlayer', function(e) {
             if (e.target.id === opponent.getContainer().attr("id")){
                 opponent.setClickEnabled(false);
-                opponent.setActive(false);
-                player.setActive(true);
+                setTimeout(function(){
+                    opponent.setActive(false);
+                    player.setActive(true);
+                }, DELAY_BETWEEN_MOVES);
                 setTimeout(function(){
                     player.shotRandomly();
-                }, DELAY_BETWEEN_MOVES);
+                }, DELAY_BETWEEN_MOVES*2);
             } else if (e.target.id === player.getContainer().attr("id")){
-                setTimeout(function() {
-                    opponent.setClickEnabled(true);
-                    opponent.setActive(true);
-                    player.setActive(false);
-                }, DELAY_BETWEEN_MOVES);
+                opponent.setClickEnabled(true);
+                opponent.setActive(true);
+                player.setActive(false);
             }
         });
         $(document).on('playAgain', function(e) {

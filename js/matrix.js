@@ -53,7 +53,7 @@ function Matrix(t, title){
         }
     }
 
-    this. shotRandomly = function(){
+    this.shotRandomly = function(){
         while(true){
             var randomRow = randomInteger(MATRIX_SIZE);
             var randomColumn = randomInteger(MATRIX_SIZE);
@@ -85,10 +85,7 @@ function Matrix(t, title){
             container.trigger('playAgain');
         } else {
             markCellAsMissed(row,column,cell);
-            setTimeout(function() {
-                container.trigger('nextPlayer');
-            }, 200);
-
+            container.trigger('nextPlayer');
         }
     };
 
@@ -202,9 +199,10 @@ function Matrix(t, title){
         cell.removeClass('cell-empty');
         cell.addClass('cell-missed');
         cell.html('x');
+        cell.addClass('cell-missed-animation');
+        cell.animate({fontSize: '24px'}, "fast");
+        cell.animate({fontSize: '18px'}, "fast");
     }
-
-
 
 }
 
