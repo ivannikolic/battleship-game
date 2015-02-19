@@ -2,17 +2,19 @@
  * Created by Ivan.Nikolic on 12/02/2015.
  */
 
-function Matrix(t, title){
+function Player(t, title){
     var container = t;
     var stateMatrix = emptyMatrix(CELL_EMPTY);
     var clickEnabled = true;
     var active = true;
     var showShips = true;
+    var nextFieldStrategy = new NextFieldStrategy();
 
     container.addClass('active-matrix');
     container.addClass('clickable-matrix');
 
     this.render = function (){
+        container.html("")
         if (title){
             var titleContainer = $('<div/>').addClass('player-name');
             titleContainer.append(title);
@@ -53,16 +55,9 @@ function Matrix(t, title){
         }
     }
 
-    this.shotRandomly = function(){
-        while(true){
-            var randomRow = randomInteger(MATRIX_SIZE);
-            var randomColumn = randomInteger(MATRIX_SIZE);
-            var cellState = stateMatrix[randomRow][randomColumn];
-            if (cellState != CELL_MISSED && cellState != CELL_SHIP_DESTROYED){
-                shot(randomRow, randomColumn);
-                break;
-            }
-        }
+    this.shotNextField = function(){
+        var nextField  = nextFieldStrategy.suggestNextField(stateMatrix);
+        shot(nextField.row, nextField.column);
     }
 
     function shot(row,column,cell){
@@ -76,14 +71,17 @@ function Matrix(t, title){
         if (stateMatrix[row][column]==CELL_WITH_SHIP){
             stateMatrix[row][column] = CELL_SHIP_DESTROYED;
             cell.addClass('cell-ship-hit');
+            nextFieldStrategy.trackHit(row, column);
             if (checkIfShipIsDestroyed(row, column)){
+                nextFieldStrategy.setShipAsDestroyed();
                 blockSurroundingShipFields(row, column);
                 if (areAllShipsDestroyed(stateMatrix)){
-                    alert ('game over');
+                    container.trigger('gameOver');
                 }
             }
             container.trigger('playAgain');
         } else {
+            nextFieldStrategy.trackMiss(row, column);
             markCellAsMissed(row,column,cell);
             container.trigger('nextPlayer');
         }
@@ -120,10 +118,10 @@ function Matrix(t, title){
     }
 
     function checkIfShipIsDestroyed (row, column) {
-        return areAllFieldsDestroyed(row, column, HORIZONTAL, 1) //east
-            && areAllFieldsDestroyed(row, column, HORIZONTAL, -1)//west
-            && areAllFieldsDestroyed(row, column, VERTICAL, -1) //north
-            && areAllFieldsDestroyed(row, column, VERTICAL, 1); //south
+        return areAllFieldsDestroyed(row, column, HORIZONTAL, EAST)
+            && areAllFieldsDestroyed(row, column, HORIZONTAL, WEST)
+            && areAllFieldsDestroyed(row, column, VERTICAL, NORTH)
+            && areAllFieldsDestroyed(row, column, VERTICAL, SOUTH);
     }
 
     function areAllFieldsDestroyed(row, column, orientation, direction){

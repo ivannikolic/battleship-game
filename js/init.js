@@ -1,27 +1,28 @@
 var MATRIX_SIZE = 10;
 var VERTICAL = 0, HORIZONTAL = 1;
+var WEST = -1, EAST = 1, NORTH = -1, SOUTH = 1;
 var CELL_EMPTY = 0, CELL_WITH_SHIP = 1, CELL_BLOCKED = 2, CELL_MISSED = 3, CELL_SHIP_DESTROYED = 4;
-var opponent, player;
-var DELAY_BETWEEN_MOVES = 1000;
+var opponent, me;
+var DELAY_BETWEEN_MOVES = 700;
 
 $(function() {
-    player = new Matrix($('#player'), 'Player');
-    player.populateRandomly();
-    player.render();
-    player.setClickEnabled(false);
-    player.setActive(false);
+    me = new Player($('#me'), 'Player');
+    me.populateRandomly();
+    me.render();
+    me.setClickEnabled(false);
+    me.setActive(false);
 
-    opponent = new Matrix($('#opponent'), 'Opponent');
+    opponent = new Player($('#opponent'), 'Opponent');
     opponent.setShowShips(false);
     opponent.populateRandomly();
     opponent.render();
 
-    var game = new Game(player, opponent);
+    var game = new Game(me, opponent);
     game.start();
 
 });
 
-function Game(player, opponent) {
+function Game(me, opponent) {
 
     this.start = function(){
         $(document).on('nextPlayer', function(e) {
@@ -29,23 +30,37 @@ function Game(player, opponent) {
                 opponent.setClickEnabled(false);
                 setTimeout(function(){
                     opponent.setActive(false);
-                    player.setActive(true);
+                    me.setActive(true);
                 }, DELAY_BETWEEN_MOVES);
                 setTimeout(function(){
-                    player.shotRandomly();
+                    me.shotNextField();
                 }, DELAY_BETWEEN_MOVES*2);
-            } else if (e.target.id === player.getContainer().attr("id")){
-                opponent.setClickEnabled(true);
-                opponent.setActive(true);
-                player.setActive(false);
+            } else if (e.target.id === me.getContainer().attr("id")){
+                setTimeout(function(){
+                    opponent.setClickEnabled(true);
+                    opponent.setActive(true);
+                    me.setActive(false);
+                }, DELAY_BETWEEN_MOVES);
             }
         });
         $(document).on('playAgain', function(e) {
-            if (e.target.id === player.getContainer().attr("id")) {
+            if (e.target.id === me.getContainer().attr("id")) {
                 setTimeout(function(){
-                    player.shotRandomly();
-                }, DELAY_BETWEEN_MOVES);
+                    me.shotNextField();
+                }, DELAY_BETWEEN_MOVES * 1.5);
             }
+        });
+        $(document).on('gameOver', function(e) {
+            opponent.setClickEnabled(false);
+            opponent.setActive(false);
+            me.setClickEnabled(false);
+            me.setActive(false);
+            if (e.target.id === me.getContainer().attr("id")) {
+                opponent.setShowShips(true);
+                opponent.render();
+            }
+
+            alert ('game over');
         });
     };
 

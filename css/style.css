@@ -15,7 +15,7 @@ table.matrix td {
     cursor: pointer;
 }
 
-.matrix-holder {
+.player-holder {
     background-color: #F5F1DE;
     margin: 5px;
     padding: 5px;
@@ -53,13 +53,13 @@ table.matrix td.cell-missed {
 
 /* Chrome, Safari, Opera */
 @-webkit-keyframes cell-missed-animation {
-    from {background: #db4e5a;}
+    from {background: #eaf73c;}
     to {background: #ffffff;}
 }
 
 /* Standard syntax */
 @keyframes cell-missed-animation {
-    from {background: #db4e5a;}
+    from {background: #eaf73c;}
     to {background: #ffffff;}
 }
 
