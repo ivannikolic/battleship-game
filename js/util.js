@@ -49,6 +49,11 @@ function getClassByCellState(cellState, showShips){
     }
 }
 
+function shuffleArray(o){ //v1.0
+    for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+    return o;
+};
+
 function isCellInMatrixRange(row, column){
     return (row >= 0 && row < MATRIX_SIZE) && (column >= 0 && column < MATRIX_SIZE);
 }

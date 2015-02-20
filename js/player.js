@@ -55,7 +55,7 @@ function Player(t, title){
         }
     }
 
-    this.shotNextField = function(){
+    this.autoShotNextField = function(){
         var nextField  = nextFieldStrategy.suggestNextField(stateMatrix);
         shot(nextField.row, nextField.column);
     }
@@ -77,11 +77,12 @@ function Player(t, title){
                 blockSurroundingShipFields(row, column);
                 if (areAllShipsDestroyed(stateMatrix)){
                     container.trigger('gameOver');
+                    return;
                 }
             }
             container.trigger('playAgain');
         } else {
-            nextFieldStrategy.trackMiss(row, column);
+            //nextFieldStrategy.trackMiss(row, column);
             markCellAsMissed(row,column,cell);
             container.trigger('nextPlayer');
         }
@@ -125,25 +126,26 @@ function Player(t, title){
     }
 
     function areAllFieldsDestroyed(row, column, orientation, direction){
+        var _direction = direction.getValue();
         if (orientation==HORIZONTAL){
-            var c = column + direction;
+            var c = column + _direction;
             while (isCellInMatrixRange(row,c)){
                 if (stateMatrix[row][c]==CELL_WITH_SHIP){
                     return false;
                 } else if (stateMatrix[row][c]!=CELL_SHIP_DESTROYED) {
                     return true;
                 }
-                c += direction;
+                c += _direction;
             }
         } else {
-            var r = row + direction;
+            var r = row + _direction;
             while (isCellInMatrixRange(r,column)){
                 if (stateMatrix[r][column]==CELL_WITH_SHIP){
                     return false;
                 } else if (stateMatrix[r][column]!=CELL_SHIP_DESTROYED) {
                     return true;
                 }
-                r += direction;
+                r += _direction;
             }
         }
         return true;
