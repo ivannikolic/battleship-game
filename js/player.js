@@ -4,11 +4,12 @@
 
 function Player(t, title){
     var container = t;
-    var stateMatrix = emptyMatrix(CELL_EMPTY);
+    var stateMatrix = createMatrix();
     var clickEnabled = true;
     var active = true;
     var showShips = true;
     var nextFieldStrategy = new NextFieldStrategy();
+    var restored = false;
 
     container.addClass('active-matrix');
     container.addClass('clickable-matrix');
@@ -41,12 +42,25 @@ function Player(t, title){
                 var cell = $('<td id="cell' + i + j + '"/>');
                 var cellState = stateMatrix[i][j];
                 cell.addClass(getClassByCellState(cellState, showShips));
+                if (cellState == CELL_MISSED){
+                    cell.append('x');
+                }
                 cell.click({cell : cell, row: i, column : j}, fieldClick);
                 row.append(cell);
             }
             table.append(row);
         }
         container.append(table);
+    }
+
+    function createMatrix(){
+        var localStorage = retrievePlayerFromLocalStorage(title);
+        if (localStorage != null) {
+            restored = true;
+            console.log(localStorage);
+            return localStorage;
+        }
+        return emptyMatrix(CELL_EMPTY);
     }
 
     function fieldClick(event){
@@ -86,6 +100,7 @@ function Player(t, title){
             markCellAsMissed(row,column,cell);
             container.trigger('nextPlayer');
         }
+        storePlayerInLocalStorage(title, stateMatrix);
     };
 
     this.setClickEnabled = function(enabled){
@@ -111,11 +126,13 @@ function Player(t, title){
     };
 
     this.populateRandomly = function(){
-        stateMatrix = new RandomFieldPopulator().populate();
+        if (!restored){
+            //stateMatrix = new RandomFieldPopulator().populate();
+        }
     };
 
-    this.getContainer = function () {
-        return container;
+    this.getContainerId = function () {
+        return container.attr("id");
     }
 
     function checkIfShipIsDestroyed (row, column) {

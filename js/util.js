@@ -49,7 +49,7 @@ function getClassByCellState(cellState, showShips){
     }
 }
 
-function shuffleArray(o){ //v1.0
+function shuffleArray(o){
     for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
     return o;
 };
@@ -60,4 +60,39 @@ function isCellInMatrixRange(row, column){
 
 function logField(row, column, message){
     console.log((message!=null ? message : "") + "(" + String.fromCharCode(65+column) + (row+1) + ")");
+}
+
+function storePlayerInLocalStorage(playerName,stateMatrix){
+    if(typeof(Storage) !== "undefined") {
+        var matrixAsString = "";
+        for (var i = 0; i<MATRIX_SIZE; i++){
+            for (var j = 0; j<MATRIX_SIZE; j++){
+                matrixAsString += stateMatrix[i][j];
+            }
+        }
+        localStorage['matrix-'+playerName] = matrixAsString;
+    }
+}
+
+function retrievePlayerFromLocalStorage(playerName){
+    if(typeof(Storage) !== "undefined") {
+        if (localStorage['matrix-'+playerName]){
+            var states = localStorage['matrix-'+playerName].split('');
+            var matrix = {};
+            for(var i=0; i<MATRIX_SIZE; i++){
+                matrix[i] = {};
+                for(var j=0; j<MATRIX_SIZE; j++){
+                    matrix[i][j] = parseInt(states[i*10+j]);
+                }
+            }
+            return matrix;
+        }
+    }
+    return null;
+}
+
+function removeFromLocalStorage(playerName){
+    if(typeof(Storage) !== "undefined") {
+        localStorage.removeItem('matrix-'+playerName);
+    }
 }
