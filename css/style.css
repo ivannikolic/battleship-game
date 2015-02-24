@@ -36,11 +36,17 @@ table.matrix td {
     background-color: #ffffff;
 }
 
+table.matrix td.cell-empty {
+    /*background-image: url("../img/WaterTile.png");*/
+    background-color: #ffffff;
+}
+
 table.matrix td.cell-with-ship {
     background-color: #999999;
 }
 
 table.matrix td.cell-blocked {
+    /*background-image: url("../img/WaterTile.png");*/
     background-color: #ffffff;
 }
 
@@ -85,7 +91,12 @@ table.matrix td.cell-ship-hit {
     margin-bottom: 10px;
 }
 
-.game {
+.mainFrame {
     width: 800px;
     margin: 0 auto;
+}
+
+.button-container {
+    text-align: center;
+    padding: 10px;
 }

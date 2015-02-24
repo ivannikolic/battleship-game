@@ -2,22 +2,38 @@ var MATRIX_SIZE = 10;
 var VERTICAL = 0, HORIZONTAL = 1;
 var WEST = new Direction(-1), EAST = new Direction(1), NORTH = new Direction(-1), SOUTH = new Direction(1);
 var CELL_EMPTY = 0, CELL_WITH_SHIP = 1, CELL_BLOCKED = 2, CELL_MISSED = 3, CELL_SHIP_DESTROYED = 4;
-var opponent, me;
+var opponent, me, setup;
 var DELAY_BETWEEN_MOVES = 500;
+var game;
 
 $(function() {
 
-    startGame();
+    settlement();
 
-    $("#NewGame").click(function() {
-        removeFromLocalStorage(me.getContainerId());
-        removeFromLocalStorage(opponent.getContainerId());
-        startGame();
-    });
+    //startGame();
 
 });
 
+function settlement(){
+    $("#game").hide();
+    $("#settlement").show();
+
+    setup = new Player($('#SettlePlayer'), "Settle player's ships");
+    setup.render();
+    setup.setClickEnabled(false);
+    setup.setActive(false);
+
+    $("#StartGame").click(function() {
+        startGame();
+    });
+
+}
+
 function startGame(){
+
+    $("#game").show();
+    $("#settlement").hide();
+
     me = new Player($('#Player'), 'Player');
     me.populateRandomly();
     me.render();
@@ -29,8 +45,16 @@ function startGame(){
     opponent.populateRandomly();
     opponent.render();
 
-    var game = new Game(me, opponent);
+    game = new Game(me, opponent);
     game.start();
+
+    $("#NewGame").click(function() {
+        if (confirm("Are you sure you want to quit current game?")) {
+            removeFromLocalStorage(me.getContainerId());
+            removeFromLocalStorage(opponent.getContainerId());
+            location.reload();
+        }
+    });
 }
 
 function Game(me, opponent) {

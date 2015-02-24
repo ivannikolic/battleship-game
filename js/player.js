@@ -127,7 +127,7 @@ function Player(t, title){
 
     this.populateRandomly = function(){
         if (!restored){
-            //stateMatrix = new RandomFieldPopulator().populate();
+            stateMatrix = new RandomFieldPopulator().populate();
         }
     };
 
