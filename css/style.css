@@ -100,3 +100,17 @@ table.matrix td.cell-ship-hit {
     text-align: center;
     padding: 10px;
 }
+
+.ship {
+    background-color: #999999;
+}
+
+#coverup {
+    background: white;
+    width: 170px;
+    height: 100px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 2;
+}

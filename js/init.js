@@ -2,6 +2,7 @@ var MATRIX_SIZE = 10;
 var VERTICAL = 0, HORIZONTAL = 1;
 var WEST = new Direction(-1), EAST = new Direction(1), NORTH = new Direction(-1), SOUTH = new Direction(1);
 var CELL_EMPTY = 0, CELL_WITH_SHIP = 1, CELL_BLOCKED = 2, CELL_MISSED = 3, CELL_SHIP_DESTROYED = 4;
+var CELL_SIZE = 33;
 var opponent, me, setup;
 var DELAY_BETWEEN_MOVES = 500;
 var game;
@@ -18,7 +19,7 @@ function settlement(){
     $("#game").hide();
     $("#settlement").show();
 
-    setup = new Player($('#SettlePlayer'), "Settle player's ships");
+    setup = new Player($('#SettlePlayer'), "Settle player's ships", true);
     setup.render();
     setup.setClickEnabled(false);
     setup.setActive(false);
@@ -26,6 +27,36 @@ function settlement(){
     $("#StartGame").click(function() {
         startGame();
     });
+
+    var ship = new Ship (4, HORIZONTAL);
+    ship.render($("#AvailableShips"));
+
+    var ship = new Ship (3, HORIZONTAL);
+    ship.render($("#AvailableShips"));
+
+    var ship = new Ship (3, HORIZONTAL);
+    ship.render($("#AvailableShips"));
+
+    var ship = new Ship (2, HORIZONTAL);
+    ship.render($("#AvailableShips"));
+
+    var ship = new Ship (2, HORIZONTAL);
+    ship.render($("#AvailableShips"));
+
+    var ship = new Ship (2, HORIZONTAL);
+    ship.render($("#AvailableShips"));
+
+    var ship = new Ship (1, HORIZONTAL);
+    ship.render($("#AvailableShips"));
+
+    var ship = new Ship (1, HORIZONTAL);
+    ship.render($("#AvailableShips"));
+
+    var ship = new Ship (1, HORIZONTAL);
+    ship.render($("#AvailableShips"));
+
+    var ship = new Ship (1, HORIZONTAL);
+    ship.render($("#AvailableShips"));
 
 }
 

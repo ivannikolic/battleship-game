@@ -9,14 +9,17 @@
     <script type="application/javascript" src="js/player.js"></script>
     <script type="application/javascript" src="js/randomFieldPopulator.js"></script>
     <script type="application/javascript" src="js/nextFieldStrategy.js"></script>
+    <script type="application/javascript" src="js/shipSettlement.js"></script>
     <link rel="stylesheet" type="text/css" href="css/style.css"/>
 </head>
 <body>
     <div class="mainFrame">
+        <div id="coverup"></div>
         <div id="settlement">
             <div class="button-container"><input type="button" value="Start Game" id="StartGame"/></div>
             <div>
                 <span id="SettlePlayer" class="player-holder float-left"><!--matrix will be rendered here--></span>
+                <span id="AvailableShips" class="float-right"><!--matrix will be rendered here--></span>
             </div>
         </div>
 
