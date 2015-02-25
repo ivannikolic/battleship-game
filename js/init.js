@@ -34,7 +34,7 @@ function settlement(){
     var ship = new Ship (3, HORIZONTAL);
     ship.render($("#AvailableShips"));
 
-    var ship = new Ship (3, HORIZONTAL);
+    var ship = new Ship (3, VERTICAL);
     ship.render($("#AvailableShips"));
 
     var ship = new Ship (2, HORIZONTAL);

@@ -12,45 +12,44 @@ function Ship(size, orientation){
         ship.addClass('ship');
         ship.height(orientation == HORIZONTAL ? CELL_SIZE : CELL_SIZE*size);
         ship.width(orientation == HORIZONTAL ? CELL_SIZE*size : CELL_SIZE);
-        container.append(ship);
-        ship.on('dragstart', function(e) {
-            var crt = this.cloneNode(true);
-            crt.style.backgroundColor = "red";
-            crt.style.position = "absolute"; crt.style.top = "0px"; crt.style.right = "0px";
-            document.body.appendChild(crt);
-            e.originalEvent.dataTransfer.setDragImage(crt, 0, 0);
-            //var dataTransfer = e.originalEvent.dataTransfer;
-            //dataTransfer.effectAllowed = 'copy';
-            //dataTransfer.setData('Text', this.id);
-        //    //var crt = this.cloneNode(true);
-        //    //crt.style.backgroundColor = "red";
-        //    //crt.style.position = "absolute"; crt.style.top = "0px"; crt.style.right = "0px";
-        //    //document.body.appendChild(crt);
-        //    //evt.dataTransfer.setDragImage(crt, 0, 0);
-        //    //var crt = this.cloneNode(true);
-        //    //crt.style.backgroundColor = "red";
-        //    //crt.style.display = "none"; /* or visibility: hidden, or any of the above */
-        //    //document.body.appendChild(crt);
-        //    //e.dataTransfer.setDragImage(crt, 0, 0);
+
+        ship.get(0).addEventListener("dragstart", function(e) {
+            var cpy = ship.get(0).cloneNode(true);
+            cpy.style.backgroundColor = "red";
+            cpy.style.position = "absolute";
+            var cu = document.getElementById("coverup");
+            cpy.style.left = (cu.offsetLeft) + "px";
+            cpy.style.top = (cu.offsetTop) + "px";
+            cpy.id = this.id + "-extra";
+            document.body.appendChild(cpy);
+            e.dataTransfer.setDragImage(cpy, CELL_SIZE/2, CELL_SIZE/2);
+            e.dataTransfer.setData('Text', "" + size + "," + orientation);
         });
+        ship.get(0).addEventListener("dragend", function(e) {
+            document.body.removeChild(document.getElementById(ship.get(0).id + "-extra"));
+        });
+
+        container.append(ship);
     };
 }
 
 function allowDrop(ev) {
+
+
     ev.preventDefault();
 }
 
-//function drag(e, draggableObject) {
-//    //e.dataTransfer.setData("text", e.target.id);
-//    var crt = draggableObject.cloneNode(true);
-//    crt.style.backgroundColor = "red";
-//    crt.style.display = "none"; /* or visibility: hidden, or any of the above */
-//    document.body.appendChild(crt);
-//    e.dataTransfer.setDragImage(crt, CELL_SIZE/2, CELL_SIZE/2);
-//}
+function drop(e) {
+    e.preventDefault();
+    var ship = getTransferData(e);
+    console.log(ship);
+}
 
-function drop(ev) {
-    ev.preventDefault();
-    var data = ev.dataTransfer.getData("text");
-    ev.target.appendChild(document.getElementById(data));
+function getTransferData(e){
+    var textData = e.dataTransfer.getData('Text');
+    var array = textData.split(",");
+    var _size = parseInt(array[0]);
+    var _orientation = parseInt(array[1]);
+    return {size : _size, orientation: _orientation};
+
 }

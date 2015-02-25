@@ -102,6 +102,7 @@ table.matrix td.cell-ship-hit {
 }
 
 .ship {
+    margin: 5px;
     background-color: #999999;
 }
 
