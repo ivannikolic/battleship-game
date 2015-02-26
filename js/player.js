@@ -39,8 +39,9 @@ function Player(t, title, draggable){
             headerLeft.append(i+1);
             row.append(headerLeft);
             for(var j=0; j<MATRIX_SIZE; j++){
-                var dragAndDrop = draggable ? ' ondrop="drop(event)" ondragover="allowDrop(event)"' : "";
-                var cell = $('<td id="cell' + i + j + '"' + dragAndDrop + '/>');
+                var cellId = "" + i + j;
+                var dragAndDrop = draggable ? ' ondrop="drop(event)" ondragover="allowDrop(event,\'' + cellId + '\')"' : "";
+                var cell = $('<td id="cell' + cellId + '"' + dragAndDrop + '/>');
                 var cellState = stateMatrix[i][j];
                 cell.addClass(getClassByCellState(cellState, showShips));
                 if (cellState == CELL_MISSED){

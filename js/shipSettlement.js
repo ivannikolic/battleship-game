@@ -23,7 +23,7 @@ function Ship(size, orientation){
             cpy.id = this.id + "-extra";
             document.body.appendChild(cpy);
             e.dataTransfer.setDragImage(cpy, CELL_SIZE/2, CELL_SIZE/2);
-            e.dataTransfer.setData('Text', "" + size + "," + orientation);
+            e.dataTransfer.setData('Text', '' + size + ',' + orientation);
         });
         ship.get(0).addEventListener("dragend", function(e) {
             document.body.removeChild(document.getElementById(ship.get(0).id + "-extra"));
@@ -33,23 +33,30 @@ function Ship(size, orientation){
     };
 }
 
-function allowDrop(ev) {
-
-
-    ev.preventDefault();
+function allowDrop(ev,startingPoint) {
+    startingPoint = getPointFromString(startingPoint);
+    var ship = getShipInfo(ev);
+    if ((ship.orientation==HORIZONTAL && startingPoint.column + ship.size <= MATRIX_SIZE) ||
+        (ship.orientation==VERTICAL && startingPoint.row + ship.size <= MATRIX_SIZE)){
+        ev.preventDefault();
+    }
 }
 
 function drop(e) {
     e.preventDefault();
-    var ship = getTransferData(e);
-    console.log(ship);
 }
 
-function getTransferData(e){
+function getShipInfo(e){
     var textData = e.dataTransfer.getData('Text');
-    var array = textData.split(",");
+    var array = textData.split(',');
     var _size = parseInt(array[0]);
     var _orientation = parseInt(array[1]);
     return {size : _size, orientation: _orientation};
+}
 
+function getPointFromString(textData){
+    var array = textData.toString().split('');
+    var _row = parseInt(array[0]);
+    var _column = parseInt(array[1]);
+    return {row : _row, column: _column};
 }
