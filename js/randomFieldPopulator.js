@@ -58,21 +58,4 @@ function RandomFieldPopulator(){
         }
     }
 
-    function markSurroundingCellsAsBlocked(matrix, row, column){
-        for (var r = row -1; r<=row+1; r++){
-            for (var c = column -1; c<=column+1; c++){
-                markCellBlockedIfItsEmpty(matrix, r, c);
-            }
-        }
-    }
-
-    function markCellBlockedIfItsEmpty(matrix, row, column){
-        if (!isCellInMatrixRange(row,column)){
-            return;
-        }
-        if (matrix[row][column]==CELL_EMPTY){
-            matrix[row][column] = CELL_BLOCKED;
-        }
-    }
-
 }

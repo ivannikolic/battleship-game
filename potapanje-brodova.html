@@ -13,10 +13,13 @@
     <link rel="stylesheet" type="text/css" href="css/style.css"/>
 </head>
 <body>
+    <div id="coverup"></div>
     <div class="mainFrame">
-        <div id="coverup"></div>
         <div id="settlement">
-            <div class="button-container"><input type="button" value="Start Game" id="StartGame"/></div>
+            <div class="button-container">
+                <input type="button" value="Reset" id="ResetSettlement"/>
+                <input type="button" value="Start Game" id="StartGame"/>
+            </div>
             <div>
                 <span id="SettlePlayer" class="player-holder float-left"><!--matrix will be rendered here--></span>
                 <span id="AvailableShips" class="float-right"><!--matrix will be rendered here--></span>

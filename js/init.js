@@ -8,11 +8,11 @@ var DELAY_BETWEEN_MOVES = 500;
 var game;
 
 $(function() {
-
-    settlement();
-
-    //startGame();
-
+    if (isGameInProgress()){
+        startGame();
+    } else {
+        settlement();
+    }
 });
 
 function settlement(){
@@ -28,35 +28,29 @@ function settlement(){
         startGame();
     });
 
-    var ship = new Ship (4, HORIZONTAL);
-    ship.render($("#AvailableShips"));
+    $("#ResetSettlement").click(function() {
+        location.reload();
+    });
 
-    var ship = new Ship (3, HORIZONTAL);
-    ship.render($("#AvailableShips"));
+    new NotSettledShip (4, HORIZONTAL, $("#AvailableShips"));
+    new NotSettledShip (3, HORIZONTAL, $("#AvailableShips"));
+    new NotSettledShip (3, HORIZONTAL, $("#AvailableShips"));
+    new NotSettledShip (2, HORIZONTAL, $("#AvailableShips"));
+    new NotSettledShip (2, HORIZONTAL, $("#AvailableShips"));
+    new NotSettledShip (2, HORIZONTAL, $("#AvailableShips"));
+    new NotSettledShip (1, HORIZONTAL, $("#AvailableShips"));
+    new NotSettledShip (1, HORIZONTAL, $("#AvailableShips"));
+    new NotSettledShip (1, HORIZONTAL, $("#AvailableShips"));
+    new NotSettledShip (1, HORIZONTAL, $("#AvailableShips"));
 
-    var ship = new Ship (3, VERTICAL);
-    ship.render($("#AvailableShips"));
+    $('#StartGame').attr("disabled", true);
 
-    var ship = new Ship (2, HORIZONTAL);
-    ship.render($("#AvailableShips"));
-
-    var ship = new Ship (2, HORIZONTAL);
-    ship.render($("#AvailableShips"));
-
-    var ship = new Ship (2, HORIZONTAL);
-    ship.render($("#AvailableShips"));
-
-    var ship = new Ship (1, HORIZONTAL);
-    ship.render($("#AvailableShips"));
-
-    var ship = new Ship (1, HORIZONTAL);
-    ship.render($("#AvailableShips"));
-
-    var ship = new Ship (1, HORIZONTAL);
-    ship.render($("#AvailableShips"));
-
-    var ship = new Ship (1, HORIZONTAL);
-    ship.render($("#AvailableShips"));
+    $(document).on("shipSettled", function (e){
+        $('#'+ e.shipId).remove();
+        if (e.allShipsSettled){
+            $('#StartGame').attr("disabled", false);
+        }
+    });
 
 }
 
@@ -64,23 +58,31 @@ function startGame(){
 
     $("#game").show();
     $("#settlement").hide();
+    $("#coverup").hide();
 
     me = new Player($('#Player'), 'Player');
-    me.populateRandomly();
+
+    if (setup) {
+        me.setStateMatrix(setup.getStateMatrix());
+    } else {
+        me.populateRandomly();
+    }
     me.render();
     me.setClickEnabled(false);
     me.setActive(false);
-
     opponent = new Player($('#Computer'), 'Computer');
-    opponent.setShowShips(false);
+
+    opponent.setShowShips(true);
     opponent.populateRandomly();
     opponent.render();
+
+    setGameInProgress();
 
     game = new Game(me, opponent);
     game.start();
 
     $("#NewGame").click(function() {
-        if (confirm("Are you sure you want to quit current game?")) {
+        if (!isGameInProgress() || confirm("Are you sure you want to quit current game?")) {
             removeFromLocalStorage(me.getContainerId());
             removeFromLocalStorage(opponent.getContainerId());
             location.reload();
@@ -125,7 +127,8 @@ function Game(me, opponent) {
                 opponent.setShowShips(true);
                 opponent.render();
             }
-
+            removeFromLocalStorage(me.getContainerId());
+            removeFromLocalStorage(opponent.getContainerId());
             alert ("" + e.target.id + " lost! Game over!");
         });
     };

@@ -9,7 +9,6 @@ function Player(t, title, draggable){
     var active = true;
     var showShips = true;
     var nextFieldStrategy = new NextFieldStrategy();
-    var restored = false;
 
     container.addClass('active-matrix');
     container.addClass('clickable-matrix');
@@ -40,7 +39,7 @@ function Player(t, title, draggable){
             row.append(headerLeft);
             for(var j=0; j<MATRIX_SIZE; j++){
                 var cellId = "" + i + j;
-                var dragAndDrop = draggable ? ' ondrop="drop(event)" ondragover="allowDrop(event,\'' + cellId + '\')"' : "";
+                var dragAndDrop = draggable ? ' ondrop="drop(event,\'' + cellId + '\')" ondragover="allowDrop(event,\'' + cellId + '\')"' : "";
                 var cell = $('<td id="cell' + cellId + '"' + dragAndDrop + '/>');
                 var cellState = stateMatrix[i][j];
                 cell.addClass(getClassByCellState(cellState, showShips));
@@ -58,8 +57,6 @@ function Player(t, title, draggable){
     function createMatrix(){
         var localStorage = retrievePlayerFromLocalStorage(title);
         if (localStorage != null) {
-            restored = true;
-            console.log(localStorage);
             return localStorage;
         }
         return emptyMatrix(CELL_EMPTY);
@@ -128,14 +125,24 @@ function Player(t, title, draggable){
     };
 
     this.populateRandomly = function(){
-        if (!restored){
+        if (!isGameInProgress()){
             stateMatrix = new RandomFieldPopulator().populate();
+            storePlayerInLocalStorage(title, stateMatrix);
         }
+    };
+
+    this.getStateMatrix = function(){
+        return stateMatrix;
+    };
+
+    this.setStateMatrix = function(matrix){
+        stateMatrix = matrix;
+        storePlayerInLocalStorage(title, stateMatrix);
     };
 
     this.getContainerId = function () {
         return container.attr("id");
-    }
+    };
 
     function checkIfShipIsDestroyed (row, column) {
         return areAllFieldsDestroyed(row, column, HORIZONTAL, EAST)

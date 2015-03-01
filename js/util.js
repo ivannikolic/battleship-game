@@ -74,6 +74,19 @@ function storePlayerInLocalStorage(playerName,stateMatrix){
     }
 }
 
+function setGameInProgress() {
+    localStorage['gameInProgress'] = 'true';
+}
+
+function setGameInProgress() {
+    localStorage['gameInProgress'] = 'true';
+}
+
+function isGameInProgress(){
+    return typeof(Storage) !== "undefined" && localStorage['gameInProgress'] !== undefined;
+}
+
+
 function retrievePlayerFromLocalStorage(playerName){
     if(typeof(Storage) !== "undefined") {
         if (localStorage['matrix-'+playerName]){
@@ -94,5 +107,23 @@ function retrievePlayerFromLocalStorage(playerName){
 function removeFromLocalStorage(playerName){
     if(typeof(Storage) !== "undefined") {
         localStorage.removeItem('matrix-'+playerName);
+        localStorage.removeItem('gameInProgress');
+    }
+}
+
+function markSurroundingCellsAsBlocked(matrix, row, column){
+    for (var r = row -1; r<=row+1; r++){
+        for (var c = column -1; c<=column+1; c++){
+            markCellBlockedIfItsEmpty(matrix, r, c);
+        }
+    }
+}
+
+function markCellBlockedIfItsEmpty(matrix, row, column){
+    if (!isCellInMatrixRange(row,column)){
+        return;
+    }
+    if (matrix[row][column]==CELL_EMPTY){
+        matrix[row][column] = CELL_BLOCKED;
     }
 }

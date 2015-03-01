@@ -26,6 +26,7 @@ table.matrix td {
     -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#000000')";
     /* For IE 5.5 - 7 */
     filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#000000');
+    z-index: 0;
 }
 
 .active-matrix {
@@ -37,7 +38,6 @@ table.matrix td {
 }
 
 table.matrix td.cell-empty {
-    /*background-image: url("../img/WaterTile.png");*/
     background-color: #ffffff;
 }
 
@@ -45,10 +45,9 @@ table.matrix td.cell-with-ship {
     background-color: #999999;
 }
 
-table.matrix td.cell-blocked {
-    /*background-image: url("../img/WaterTile.png");*/
-    background-color: #ffffff;
-}
+/*table.matrix td.cell-blocked {*/
+    /*background-color: #ffffff;*/
+/*}*/
 
 table.matrix td.cell-missed {
     color: #db4e5a;
@@ -104,14 +103,24 @@ table.matrix td.cell-ship-hit {
 .ship {
     margin: 5px;
     background-color: #999999;
+    cursor: grab;
 }
 
 #coverup {
     background: white;
-    width: 170px;
-    height: 100px;
+    width: 132px;
+    height: 132px;
     position: absolute;
     top: 0;
     right: 0;
     z-index: 2;
+}
+
+#AvailableShips {
+    margin-right: 132px;
+    min-width: 145px;
+}
+
+#SettlePlayer td.cell-blocked {
+    background-color: #dddddd;
 }
