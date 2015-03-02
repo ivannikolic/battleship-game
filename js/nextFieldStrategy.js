@@ -116,4 +116,40 @@ function NextFieldStrategy(){
         alert("A problem happened, please reload page and try again")
     }
 
+    //function getRandomField(stateMatrix){
+    //    var maxPercentage = 0;
+    //    var cellToReturn;
+    //    for (var row = 0; row<MATRIX_SIZE; row++){
+    //        for (var column = 0; column<MATRIX_SIZE; column++){
+    //            var cellState = stateMatrix[row][column];
+    //            if (cellState != CELL_MISSED && cellState != CELL_SHIP_DESTROYED){
+    //                var freeSurroundingCellsPercentage = getFreeSurroundingCellsPercentage(stateMatrix, row, column);
+    //                console.log(freeSurroundingCellsPercentage);
+    //                if (freeSurroundingCellsPercentage > maxPercentage){
+    //                    maxPercentage = freeSurroundingCellsPercentage;
+    //                    cellToReturn = {row : row, column: column};
+    //                }
+    //            }
+    //        }
+    //    }
+    //    return cellToReturn;
+    //}
+    //
+    //function getFreeSurroundingCellsPercentage(stateMatrix, row, column){
+    //    var total = 0, free=0;
+    //    for (var r = row-1; r<= row +1; r++) {
+    //        for (var c = column - 1; c <= column + 1; c++) {
+    //            if ((r==row && c==column) || !isCellInMatrixRange(r,c)){
+    //                continue;
+    //            }
+    //            total++;
+    //            var cellState = stateMatrix[r][c];
+    //            if (cellState != CELL_MISSED && cellState != CELL_SHIP_DESTROYED){
+    //                free++;
+    //            }
+    //        }
+    //    }
+    //    return free/total;
+    //}
+
 }

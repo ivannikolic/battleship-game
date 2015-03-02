@@ -104,12 +104,13 @@ table.matrix td.cell-ship-hit {
     margin: 5px;
     background-color: #999999;
     cursor: grab;
+    float: left;
 }
 
 #coverup {
     background: white;
-    width: 132px;
-    height: 132px;
+    width: 138px;
+    height: 138px;
     position: absolute;
     top: 0;
     right: 0;
@@ -118,9 +119,16 @@ table.matrix td.cell-ship-hit {
 
 #AvailableShips {
     margin-right: 132px;
-    min-width: 145px;
+    width: 230px;
 }
 
 #SettlePlayer td.cell-blocked {
     background-color: #dddddd;
+}
+
+img.rotation {
+    width: 22px;
+    height: 22px;
+    margin: 5px;
+    cursor: pointer;
 }

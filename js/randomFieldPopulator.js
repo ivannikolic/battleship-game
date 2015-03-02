@@ -5,21 +5,9 @@ function RandomFieldPopulator(){
 
     this.populate = function(){
         var matrix = emptyMatrix();
-
-        placeShip(matrix, 4);
-
-        placeShip(matrix, 3);
-        placeShip(matrix, 3);
-
-        placeShip(matrix, 2);
-        placeShip(matrix, 2);
-        placeShip(matrix, 2);
-
-        placeShip(matrix, 1);
-        placeShip(matrix, 1);
-        placeShip(matrix, 1);
-        placeShip(matrix, 1);
-
+        for (var i = 0; i < shipSizes.length; i++) {
+            placeShip(matrix, shipSizes[i]);
+        }
         return matrix;
     }
 

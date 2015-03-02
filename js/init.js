@@ -1,9 +1,10 @@
 var MATRIX_SIZE = 10;
 var VERTICAL = 0, HORIZONTAL = 1;
+var shipSizes = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1];
 var WEST = new Direction(-1), EAST = new Direction(1), NORTH = new Direction(-1), SOUTH = new Direction(1);
 var CELL_EMPTY = 0, CELL_WITH_SHIP = 1, CELL_BLOCKED = 2, CELL_MISSED = 3, CELL_SHIP_DESTROYED = 4;
 var CELL_SIZE = 33;
-var opponent, me, setup;
+var opponent, you, setup;
 var DELAY_BETWEEN_MOVES = 500;
 var game;
 
@@ -32,24 +33,12 @@ function settlement(){
         location.reload();
     });
 
-    new NotSettledShip (4, HORIZONTAL, $("#AvailableShips"));
-    new NotSettledShip (3, HORIZONTAL, $("#AvailableShips"));
-    new NotSettledShip (3, HORIZONTAL, $("#AvailableShips"));
-    new NotSettledShip (2, HORIZONTAL, $("#AvailableShips"));
-    new NotSettledShip (2, HORIZONTAL, $("#AvailableShips"));
-    new NotSettledShip (2, HORIZONTAL, $("#AvailableShips"));
-    new NotSettledShip (1, HORIZONTAL, $("#AvailableShips"));
-    new NotSettledShip (1, HORIZONTAL, $("#AvailableShips"));
-    new NotSettledShip (1, HORIZONTAL, $("#AvailableShips"));
-    new NotSettledShip (1, HORIZONTAL, $("#AvailableShips"));
+    renderNonSettledShips($("#AvailableShips"));
 
     $('#StartGame').attr("disabled", true);
 
-    $(document).on("shipSettled", function (e){
-        $('#'+ e.shipId).remove();
-        if (e.allShipsSettled){
-            $('#StartGame').attr("disabled", false);
-        }
+    $(document).on("allShipsSettled", function (e){
+        $('#StartGame').attr("disabled", false);
     });
 
 }
@@ -60,30 +49,30 @@ function startGame(){
     $("#settlement").hide();
     $("#coverup").hide();
 
-    me = new Player($('#Player'), 'Player');
+    you = new Player($('#You'), 'Player');
 
     if (setup) {
-        me.setStateMatrix(setup.getStateMatrix());
+        you.setStateMatrix(setup.getStateMatrix());
     } else {
-        me.populateRandomly();
+        you.populateRandomly();
     }
-    me.render();
-    me.setClickEnabled(false);
-    me.setActive(false);
+    you.render();
+    you.setClickEnabled(false);
+    you.setActive(false);
     opponent = new Player($('#Computer'), 'Computer');
 
-    opponent.setShowShips(true);
+    opponent.setShowShips(false);
     opponent.populateRandomly();
     opponent.render();
 
     setGameInProgress();
 
-    game = new Game(me, opponent);
+    game = new Game(you, opponent);
     game.start();
 
     $("#NewGame").click(function() {
         if (!isGameInProgress() || confirm("Are you sure you want to quit current game?")) {
-            removeFromLocalStorage(me.getContainerId());
+            removeFromLocalStorage(you.getContainerId());
             removeFromLocalStorage(opponent.getContainerId());
             location.reload();
         }

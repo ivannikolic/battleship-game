@@ -3,33 +3,88 @@
  */
 var shipBeingDragged;
 var numberOfNotSettledShips=0;
+var ships = {};
 
-function NotSettledShip(size, orientation, container){
-    numberOfNotSettledShips++;
-    var shipId = "ship" + new Date().getTime();
-    var ship = $('<div draggable="true" id="' + shipId + '"/>');
-    ship.addClass('ship');
-    ship.height(orientation == HORIZONTAL ? CELL_SIZE : CELL_SIZE*size);
-    ship.width(orientation == HORIZONTAL ? CELL_SIZE*size : CELL_SIZE);
-
-    ship.get(0).addEventListener("dragstart", function(e) {
-        var cpy = ship.get(0).cloneNode(true);
-        cpy.style.backgroundColor = "red";
-        cpy.style.position = "absolute";
-        var cu = document.getElementById("coverup");
-        cpy.style.left = (cu.offsetLeft) + "px";
-        cpy.style.top = (cu.offsetTop) + "px";
-        cpy.id = this.id + "-extra";
-        document.body.appendChild(cpy);
-        e.dataTransfer.setDragImage(cpy, CELL_SIZE/2, CELL_SIZE/2);
-        e.dataTransfer.setData('shipId', shipId);
-        shipBeingDragged = {size : size, orientation: orientation};
+function renderNonSettledShips(container){
+    numberOfNotSettledShips = shipSizes.length;
+    for (var i = 0; i < shipSizes.length; i++) {
+        var shipId = "ship" + i;
+        ships[shipId] = new NotSettledShip (shipSizes[i], HORIZONTAL, container, shipId);
+        ships[shipId].render();
+    }
+    $(document).on("shipSettled", function (e){
+        $('#'+ e.shipId).remove();
+        ships[e.shipId] = null;
+        if (e.allShipsSettled){
+            $('#StartGame').attr("disabled", false);
+        }
     });
-    ship.get(0).addEventListener("dragend", function(e) {
-        document.body.removeChild(document.getElementById(ship.get(0).id + "-extra"));
-    });
+    registerRotationEventListener(container);
+}
 
-    container.append(ship);
+function registerRotationEventListener(container){
+    $(document).on("shipRotated", function (e){
+        $('#'+ e.shipId).remove();
+        var oldShip = ships[e.shipId];
+        ships[e.shipId] = new NotSettledShip (oldShip.size(), e.orientation, container, e.shipId);
+
+        container.html("");
+        for (var i = 0; i < shipSizes.length; i++) {
+            var ship = ships["ship" + i];
+            if (ship){
+                ship.render();
+            }
+        }
+    });
+}
+
+
+
+function NotSettledShip(size, orientation, container, shipId){
+
+    this.render = function (){
+        var ship = $('<div draggable="true" id="' + shipId + '"/>');
+        ship.addClass('ship');
+        ship.height(orientation == HORIZONTAL ? CELL_SIZE : CELL_SIZE*size);
+        ship.width(orientation == HORIZONTAL ? CELL_SIZE*size : CELL_SIZE);
+
+        if(size>1){
+            var rotationImage = $("<img src='img/rotate.png' class='rotation'/>");
+            rotationImage.click(function(e){
+                $.event.trigger({
+                    type: "shipRotated",
+                    shipId: shipId,
+                    orientation: orientation == HORIZONTAL ? VERTICAL : HORIZONTAL
+                });
+            });
+            ship.append(rotationImage);
+        }
+
+        ship.get(0).addEventListener("dragstart", function(e) {
+            var cpy = ship.get(0).cloneNode(true);
+            cpy.style.backgroundColor = "red";
+            cpy.style.position = "absolute";
+            var cu = document.getElementById("coverup");
+            cpy.style.left = (cu.offsetLeft) + "px";
+            cpy.style.top = (cu.offsetTop) + "px";
+            cpy.id = this.id + "-extra";
+            cpy.innerHTML = "";
+            document.body.appendChild(cpy);
+            e.dataTransfer.setDragImage(cpy, CELL_SIZE/2, CELL_SIZE/2);
+            e.dataTransfer.setData('shipId', shipId);
+            shipBeingDragged = {size : size, orientation: orientation};
+        });
+        ship.get(0).addEventListener("dragend", function(e) {
+            document.body.removeChild(document.getElementById(ship.get(0).id + "-extra"));
+        });
+
+        container.append(ship);
+
+        this.size = function(){
+            return size;
+        };
+    };
+
 }
 
 function allowDrop(ev,startingPoint) {
@@ -66,9 +121,11 @@ function placeShip(ship,startingPoint,e) {
     numberOfNotSettledShips--;
     $.event.trigger({
         type: "shipSettled",
-        shipId: e.dataTransfer.getData('shipId'),
-        allShipsSettled: numberOfNotSettledShips == 0
+        shipId: e.dataTransfer.getData('shipId')
     });
+    if (numberOfNotSettledShips == 0){
+        $.event.trigger("allShipsSettled");
+    }
 }
 
 function canShipBePlaced(ship,startingPoint){
