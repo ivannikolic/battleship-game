@@ -102,54 +102,44 @@ function NextFieldStrategy(){
     };
 
     function getRandomField(stateMatrix){
-        var i = 500;
-        while(i>0){
-            var randomRow = randomInteger(MATRIX_SIZE);
-            var randomColumn = randomInteger(MATRIX_SIZE);
-            var cellState = stateMatrix[randomRow][randomColumn];
-            if (cellState != CELL_MISSED && cellState != CELL_SHIP_DESTROYED){
-                var nextRandomCell = {row : randomRow, column: randomColumn};
-                return nextRandomCell;
+        var maxPercentage = -1;
+        var bestCellsToShot = [];
+        for (var row = 0; row<MATRIX_SIZE; row++){
+            for (var column = 0; column<MATRIX_SIZE; column++){
+                var cellState = stateMatrix[row][column];
+                if (cellState != CELL_MISSED && cellState != CELL_SHIP_DESTROYED){
+                    var freeSurroundingCellsPercentage = getFreeSurroundingCellsPercentage(stateMatrix, row, column);
+                    var cell = {row : row, column: column};
+                    if (freeSurroundingCellsPercentage == maxPercentage){
+                        bestCellsToShot.push(cell);
+                    } else if (freeSurroundingCellsPercentage > maxPercentage){
+                        maxPercentage = freeSurroundingCellsPercentage;
+                        bestCellsToShot = [cell];
+                    }
+                }
             }
-            i--;
         }
-        alert("A problem happened, please reload page and try again")
+        return shuffleArray(bestCellsToShot)[0];
     }
 
-    //function getRandomField(stateMatrix){
-    //    var maxPercentage = 0;
-    //    var cellToReturn;
-    //    for (var row = 0; row<MATRIX_SIZE; row++){
-    //        for (var column = 0; column<MATRIX_SIZE; column++){
-    //            var cellState = stateMatrix[row][column];
-    //            if (cellState != CELL_MISSED && cellState != CELL_SHIP_DESTROYED){
-    //                var freeSurroundingCellsPercentage = getFreeSurroundingCellsPercentage(stateMatrix, row, column);
-    //                console.log(freeSurroundingCellsPercentage);
-    //                if (freeSurroundingCellsPercentage > maxPercentage){
-    //                    maxPercentage = freeSurroundingCellsPercentage;
-    //                    cellToReturn = {row : row, column: column};
-    //                }
-    //            }
-    //        }
-    //    }
-    //    return cellToReturn;
-    //}
-    //
-    //function getFreeSurroundingCellsPercentage(stateMatrix, row, column){
-    //    var total = 0, free=0;
-    //    for (var r = row-1; r<= row +1; r++) {
-    //        for (var c = column - 1; c <= column + 1; c++) {
-    //            if ((r==row && c==column) || !isCellInMatrixRange(r,c)){
-    //                continue;
-    //            }
-    //            total++;
-    //            var cellState = stateMatrix[r][c];
-    //            if (cellState != CELL_MISSED && cellState != CELL_SHIP_DESTROYED){
-    //                free++;
-    //            }
-    //        }
-    //    }
-    //    return free/total;
-    //}
+    function getFreeSurroundingCellsPercentage(stateMatrix, row, column){
+        var percentage = {total : 0, free : 0};
+        inspectSurroundingCell(stateMatrix, row-1, column, percentage);
+        inspectSurroundingCell(stateMatrix, row+1, column, percentage);
+        inspectSurroundingCell(stateMatrix, row, column-1, percentage);
+        inspectSurroundingCell(stateMatrix, row, column+1, percentage);
+
+        return (percentage.free/percentage.total).toFixed(2);
+    }
+
+    function inspectSurroundingCell(stateMatrix, row, column, percentage){
+        if (isCellInMatrixRange(row,column)){
+            percentage.total++;
+            var cellState = stateMatrix[row][column];
+            if (cellState != CELL_MISSED && cellState != CELL_SHIP_DESTROYED){
+                percentage.free++;
+            }
+        }
+    }
 
 }

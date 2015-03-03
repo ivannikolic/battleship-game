@@ -20,7 +20,7 @@ function settlement(){
     $("#game").hide();
     $("#settlement").show();
 
-    setup = new Player($('#SettlePlayer'), "Settle player's ships", true);
+    setup = new Player($('#SettlePlayer'), "Settle your ships", true);
     setup.render();
     setup.setClickEnabled(false);
     setup.setActive(false);
@@ -53,8 +53,6 @@ function startGame(){
 
     if (setup) {
         you.setStateMatrix(setup.getStateMatrix());
-    } else {
-        you.populateRandomly();
     }
     you.render();
     you.setClickEnabled(false);

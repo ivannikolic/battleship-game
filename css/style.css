@@ -100,6 +100,15 @@ table.matrix td.cell-ship-hit {
     padding: 10px;
 }
 
+.non-selectable {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
 .ship {
     margin: 5px;
     background-color: #999999;

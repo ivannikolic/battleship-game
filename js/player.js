@@ -14,7 +14,8 @@ function Player(t, title, draggable){
     container.addClass('clickable-matrix');
 
     this.render = function (){
-        container.html("")
+        container.html("");
+        container.addClass('non-selectable');
         if (title){
             var titleContainer = $('<div/>').addClass('player-name');
             titleContainer.append(title);
@@ -126,8 +127,7 @@ function Player(t, title, draggable){
 
     this.populateRandomly = function(){
         if (!isGameInProgress()){
-            stateMatrix = new RandomFieldPopulator().populate();
-            storePlayerInLocalStorage(title, stateMatrix);
+            this.setStateMatrix(new RandomFieldPopulator().populate());
         }
     };
 

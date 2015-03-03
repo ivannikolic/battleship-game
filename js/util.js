@@ -78,10 +78,6 @@ function setGameInProgress() {
     localStorage['gameInProgress'] = 'true';
 }
 
-function setGameInProgress() {
-    localStorage['gameInProgress'] = 'true';
-}
-
 function isGameInProgress(){
     return typeof(Storage) !== "undefined" && localStorage['gameInProgress'] !== undefined;
 }
