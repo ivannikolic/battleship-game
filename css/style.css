@@ -120,9 +120,9 @@ table.matrix td.cell-ship-hit {
 
 #coverup {
     background: url("../img/metropolitan.png") ;
-    background-size: 140px;
-    width: 140px;
-    height: 140px;
+    background-size: 145px;
+    width: 145px;
+    height: 145px;
     position: absolute;
     bottom: 0px;
     right: 0px;
