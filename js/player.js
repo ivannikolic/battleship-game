@@ -226,7 +226,7 @@ function Player(t, title, draggable){
         cell.addClass('cell-missed');
         cell.html('x');
         cell.addClass('cell-missed-animation');
-        cell.animate({fontSize: '24px'}, "fast");
+        cell.animate({fontSize: '12px'}, "fast");
         cell.animate({fontSize: '18px'}, "fast");
     }
 

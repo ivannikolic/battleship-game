@@ -62,7 +62,7 @@ function NotSettledShip(size, orientation, container, shipId){
 
         ship.get(0).addEventListener("dragstart", function(e) {
             var cpy = ship.get(0).cloneNode(true);
-            cpy.style.backgroundColor = "red";
+            cpy.style.backgroundColor = "#ffffff";
             cpy.style.position = "absolute";
             var cu = document.getElementById("coverup");
             cpy.style.left = (cu.offsetLeft) + "px";

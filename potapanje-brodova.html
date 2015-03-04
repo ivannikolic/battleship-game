@@ -3,6 +3,7 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>Potapanje brodova</title>
+    <link href='http://fonts.googleapis.com/css?family=Indie+Flower' rel='stylesheet' type='text/css'>
     <script type="application/javascript" src="js/jquery-2.1.3.min.js"></script>
     <script type="application/javascript" src="js/init.js"></script>
     <script type="application/javascript" src="js/util.js"></script>
@@ -13,7 +14,7 @@
     <link rel="stylesheet" type="text/css" href="css/style.css"/>
 </head>
 <body>
-    <div id="coverup"></div>
+    <div id="coverup"><!-- empty--> </div>
     <div class="mainFrame">
         <div id="settlement">
             <div class="button-container">
@@ -22,7 +23,13 @@
             </div>
             <div>
                 <span id="SettlePlayer" class="player-holder float-left"><!--matrix will be rendered here--></span>
-                <span id="AvailableShips" class="float-right"><!--matrix will be rendered here--></span>
+                <span id="AvailableShips" class="float-right">
+                    <div id ="AvailableShipsTitle">
+                        Place your ships by dragging them to the left side.
+                        You can rotate each of them by clicking rotate button.
+                    </div>
+                    <div id="AvailableShipsHolder"><!-- empty--></div>
+                </span>
             </div>
         </div>
 

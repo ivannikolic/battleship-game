@@ -33,7 +33,7 @@ function settlement(){
         location.reload();
     });
 
-    renderNonSettledShips($("#AvailableShips"));
+    renderNonSettledShips($("#AvailableShipsHolder"));
 
     $('#StartGame').attr("disabled", true);
 
@@ -47,7 +47,6 @@ function startGame(){
 
     $("#game").show();
     $("#settlement").hide();
-    $("#coverup").hide();
 
     you = new Player($('#You'), 'Player');
 

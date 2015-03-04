@@ -1,53 +1,44 @@
+body{
+    background: url("../img/woodfloor.jpg");
+    font-family: 'Indie Flower', cursive;
+    font-size: 18px;
+}
+
+
 table.matrix {
     border-spacing: 0px;
     border-collapse: collapse;
 }
 
 table.matrix td {
-    border: solid 1px #777777;
+    border: solid 1px #aaaaaa;
     width: 30px;
     height: 30px;
     text-align: center;
 }
 
 .clickable-matrix td.cell-empty:hover {
-    background-color: #eaf73c;
+    background-color: #eff77c;
     cursor: pointer;
 }
 
 .player-holder {
-    background-color: #F5F1DE;
+    background: url("../img/paper.png") no-repeat center;
+    background-size: 450px 490px;
+    height: 430px;
     margin: 5px;
-    padding: 5px;
-    -moz-box-shadow: 3px 3px 4px #777;
-    -webkit-box-shadow: 3px 3px 4px #777;
-    box-shadow: 3px 3px 4px #777;
-    /* For IE 8 */
-    -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#000000')";
-    /* For IE 5.5 - 7 */
-    filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#000000');
-    z-index: 0;
+    padding: 55px 15px 10px 20px;
 }
 
-.active-matrix {
-    background-color: #db8280;
-}
-
-table.matrix td {
-    background-color: #ffffff;
-}
-
-table.matrix td.cell-empty {
-    background-color: #ffffff;
+.active-matrix .player-name {
+    background: url("../img/pencil.png") no-repeat right;
+    background-size: 80px 32px;
+    font-weight: bold;
 }
 
 table.matrix td.cell-with-ship {
-    background-color: #999999;
+    background: url("../img/scribble.png") no-repeat center;
 }
-
-/*table.matrix td.cell-blocked {*/
-    /*background-color: #ffffff;*/
-/*}*/
 
 table.matrix td.cell-missed {
     color: #db4e5a;
@@ -58,18 +49,18 @@ table.matrix td.cell-missed {
 
 /* Chrome, Safari, Opera */
 @-webkit-keyframes cell-missed-animation {
-    from {background: #eaf73c;}
-    to {background: #ffffff;}
+    from {background: #f0f700;}
+    to {background: rgba(234, 247, 60, 0);}
 }
 
 /* Standard syntax */
 @keyframes cell-missed-animation {
-    from {background: #eaf73c;}
-    to {background: #ffffff;}
+    from {background: #f0f700;}
+    to {background: rgba(234, 247, 60, 0);}
 }
 
 table.matrix td.cell-ship-hit {
-    background-color: #db4e5a;
+    background: url("../img/scribble-red.png") no-repeat center;
 }
 
 .float-left {
@@ -91,7 +82,7 @@ table.matrix td.cell-ship-hit {
 }
 
 .mainFrame {
-    width: 800px;
+    width: 850px;
     margin: 0 auto;
 }
 
@@ -111,28 +102,49 @@ table.matrix td.cell-ship-hit {
 
 .ship {
     margin: 5px;
-    background-color: #999999;
+    background: url("../img/scribble.png");
+    background-size: 33px;
+    border: solid 1px #666666;
     cursor: grab;
     float: left;
 }
 
+.ship img:hover {
+    -webkit-animation:spin 0.5s linear;
+    -moz-animation:spin 0.5s linear;
+    animation:spin 0.5s linear;
+}
+@-moz-keyframes spin { 100% { -moz-transform: rotate(-360deg); } }
+@-webkit-keyframes spin { 100% { -webkit-transform: rotate(-360deg); } }
+@keyframes spin { 100% { -webkit-transform: rotate(-360deg); transform:rotate(-360deg); } }
+
 #coverup {
-    background: white;
-    width: 138px;
-    height: 138px;
+    background: url("../img/metropolitan.png") ;
+    background-size: 140px;
+    width: 140px;
+    height: 140px;
     position: absolute;
-    top: 0;
-    right: 0;
+    bottom: 0px;
+    right: 0px;
     z-index: 2;
 }
 
 #AvailableShips {
+    background: url("../img/paper.png") no-repeat right;
+    background-size: 400px 490px;
+    padding: 0 30px 30px 12px;
     margin-right: 132px;
-    width: 230px;
+    width: 250px;
+    height: 490px;
 }
 
-#SettlePlayer td.cell-blocked {
-    background-color: #dddddd;
+#AvailableShipsTitle {
+    margin-top: 65px;
+    margin-bottom: 10px;
+}
+
+#SettlePlayer td.cell-blocked, #SettlePlayer td.cell-with-ship {
+    background-color: rgba(192, 57, 43, 0.100);
 }
 
 img.rotation {
@@ -141,3 +153,25 @@ img.rotation {
     margin: 5px;
     cursor: pointer;
 }
+
+input[type='button'] {
+    padding: 10px 14px;
+    background-color: #a70532;
+    border: none;
+    font-family: 'Indie Flower', cursive;
+    font-size: 20px;
+    color:#fff;
+    border-radius: 8px 8px 8px 8px;
+    -moz-border-radius: 8px 8px 8px 8px;
+    -webkit-border-radius: 8px 8px 8px 8px;
+}
+
+input[type='button']:hover {
+    background-color: #d1053b;
+    cursor: pointer;
+}
+
+input[type='button']:disabled {
+    display: none;
+}
+
