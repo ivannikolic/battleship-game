@@ -1,6 +1,6 @@
 var MATRIX_SIZE = 10;
 var VERTICAL = 0, HORIZONTAL = 1;
-var shipSizes = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1];
+var SHIP_SIZES = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1];
 var WEST = new Direction(-1), EAST = new Direction(1), NORTH = new Direction(-1), SOUTH = new Direction(1);
 var CELL_EMPTY = 0, CELL_WITH_SHIP = 1, CELL_BLOCKED = 2, CELL_MISSED = 3, CELL_SHIP_DESTROYED = 4;
 var CELL_SIZE = 33;

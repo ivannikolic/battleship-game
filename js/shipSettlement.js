@@ -6,10 +6,10 @@ var numberOfNotSettledShips=0;
 var ships = {};
 
 function renderNonSettledShips(container){
-    numberOfNotSettledShips = shipSizes.length;
-    for (var i = 0; i < shipSizes.length; i++) {
+    numberOfNotSettledShips = SHIP_SIZES.length;
+    for (var i = 0; i < SHIP_SIZES.length; i++) {
         var shipId = "ship" + i;
-        ships[shipId] = new NotSettledShip (shipSizes[i], HORIZONTAL, container, shipId);
+        ships[shipId] = new NotSettledShip (SHIP_SIZES[i], HORIZONTAL, container, shipId);
         ships[shipId].render();
     }
     $(document).on("shipSettled", function (e){
@@ -29,7 +29,7 @@ function registerRotationEventListener(container){
         ships[e.shipId] = new NotSettledShip (oldShip.size(), e.orientation, container, e.shipId);
 
         container.html("");
-        for (var i = 0; i < shipSizes.length; i++) {
+        for (var i = 0; i < SHIP_SIZES.length; i++) {
             var ship = ships["ship" + i];
             if (ship){
                 ship.render();

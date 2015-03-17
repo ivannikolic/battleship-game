@@ -58,10 +58,6 @@ function isCellInMatrixRange(row, column){
     return (row >= 0 && row < MATRIX_SIZE) && (column >= 0 && column < MATRIX_SIZE);
 }
 
-function logField(row, column, message){
-    console.log((message!=null ? message : "") + "(" + String.fromCharCode(65+column) + (row+1) + ")");
-}
-
 function storePlayerInLocalStorage(playerName,stateMatrix){
     if(typeof(Storage) !== "undefined") {
         var matrixAsString = "";

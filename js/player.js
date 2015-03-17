@@ -2,8 +2,7 @@
  * Created by Ivan.Nikolic on 12/02/2015.
  */
 
-function Player(t, title, draggable){
-    var container = t;
+function Player(container, title, draggable){
     var stateMatrix = createMatrix();
     var clickEnabled = true;
     var active = true;
