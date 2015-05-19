@@ -4,4 +4,4 @@ This is JavaScript implementation of classic bettleship game. It's created as a 
 Try playing it against computer.
 
 Live demo here:
-http://nikolicivan.github.io/battleship-game/
+http://ivannikolic.github.io/battleship-game/
