@@ -1,7 +1,5 @@
 ## Battleship game
 
-This is JavaScript implementation of classic bettleship game. It's created as a student project on Metropolitan University, Belgrade. 
-Try playing it against computer.
-
-Live demo here:
+This is JavaScript implementation of classical bettleship game. It's created as a student project at Metropolitan University, Belgrade. 
+Try playing it against computer here:
 http://ivannikolic.github.io/battleship-game/
